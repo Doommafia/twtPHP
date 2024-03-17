@@ -1,7 +1,27 @@
 <?php
-    if(isset($_POST["password"]) && isset($_POST["username"])){
-        echo'<script>alert("You have successfully logged in")</script>';
-        header('location:   index.php');        
+	include_once 'dbConn.php';
+
+	if(isset($_POST["password"]) && isset($_POST["username"])){
+	    $sql = "SELECT * FROM users WHERE uid = ?";
+    		$stmt = $conn->prepare($sql);
+    		$stmt->bind_param("s", $_POST["username"]);
+    		$stmt->execute();
+    		$result = $stmt->get_result();
+
+    	    if ($result->num_rows == 1) {
+        	$row = $result->fetch_assoc();
+        	$hashed_password = $row[$_POST["password"]]; // Assuming password is stored hashed
+        	if (password_verify($pass, $hashed_password)) {
+			echo'<script>alert("You have successfully logged in")</script>';
+			header("refresh:1.5;url=index.php");
+        	} else {	
+		echo'<script>alert("Your password is incorrect!")</script>';
+		header("refresh:1.5;url=login.php");
+		}
+    	} else {
+	echo'<script>alert("User not found!")</script>';
+	header("refresh:1.5;url=login.php");
+	}
     }else{
     echo
         '<div class="wrapper">
@@ -32,8 +52,13 @@ body {
     justify-content: center;
     align-items: center;
 }
-
+form{
+    background-color: white;
+	box-shadow: 3px, 3px, gray;
+}
 .wrapper{
+    width: 30dvh;
+    height: 20dvh;
     margin-top: 40dvh;
     display: flex;
     flex-direction: column;
