@@ -2,7 +2,12 @@
 
 <div class="sideBar">
     <div class="sideBar-content">
-        <i class="fa-solid fa-arrow-right fa-2x">   $user</i>
+<?php 
+      if(!isset($_SESSION["uid"])){
+	echo'<a href="login.php">Log in</a>';
+      }else{
+        echo'<a href="profile.php">Profile</a>';
+      }?>
     </div>
 </div>
 
@@ -25,9 +30,24 @@
         margin: 0;
         float: left;
         transition: 0.5s;
+        color: black;
+        font-size: 0px;
     }
     .sidebar:hover{
+        font-size:35px;
+        color: white;
         transition: 0.5s;
-        width: 30vh;
+        width: 30dvh;
     }
+
+    i{
+        color: white !important;
+        font-size: 35px !important;
+    }
+
+    a{
+	text-decoration: none;
+	color: white;
+}
+
 </style>
