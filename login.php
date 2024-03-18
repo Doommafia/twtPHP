@@ -10,7 +10,7 @@ if(isset($_POST["password"]) && isset($_POST["username"])){
 
     if ($result->num_rows == 1) {
         $row = $result->fetch_assoc();
-        $hashed_password = $row['pwd']; // Assuming password is stored hashed in the 'pwd' column
+        $hashed_password = $row['pwd']; 
         if (password_verify($_POST["password"], $hashed_password)) {
             echo '<script>alert("You have successfully logged in")</script>';
             header("refresh:1.5;url=index.php");
@@ -29,13 +29,13 @@ if(isset($_POST["password"]) && isset($_POST["username"])){
     echo '
     <div class="wrapper">
         <script src="https://kit.fontawesome.com/887e44e44e.js" crossorigin="anonymous"></script>
-        <form action="login.php" method="post">
-            Username<br>
-            <input type="text" name="username" required><br>
-            Password<br>
-            <input type="password" name="password" required><br>
-            <input type="submit" value="Start" class="submitBtn">
-        </form>            
+	<form action="login.php" method="post">
+   		 Username<br>
+    		<input type="text" name="username" class="input" required><br>
+    		Password<br>
+   		<input type="password" name="password" class="input" required><br>
+    		<input type="submit" value="Start" class="submitBtn">
+	</form>
 
         <a href="register.php">Register</a><br>
         <a href="forgot.php">Forgot Password?</a>
@@ -49,27 +49,36 @@ if(isset($_POST["password"]) && isset($_POST["username"])){
     :root {
         background: radial-gradient(circle, #0A0A33 36%, #000068 100%);
     }
-
+	
     body {
         font-family: Roboto, sans-serif;
-        color: white;
-        display: flexbox;
-        justify-content: center;
-        align-items: center;
-    }
-
-    form {
-        background-color: white;
-        box-shadow: 3px, 3px, gray;
+        color: black;
+        height: 100vh; 
+        margin: 0; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
     }
 
     .wrapper {
-        width: 30dvh;
-        height: 20dvh;
-        margin-top: 40dvh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        width: 80%; 
+        max-width: 400px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0px 3px gray;
+        border-radius: 10px; 
+    }
+
+    .submitBtn {
+        width: 100%; 
+        margin-bottom: 10px; 
+        border-radius: 3px; 
+    }
+
+    .input {
+        width: 100%;
+        border-radius: 3px; 
+        background-color: white; 
+        margin-bottom: 10px; 
     }
 </style>
-
