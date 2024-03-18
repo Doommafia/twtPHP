@@ -1,12 +1,8 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 include_once 'dbConn.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST["password"]) && isset($_POST["username"]) && isset($_POST["email"])) {
-        // Check if the username already exists
         $check_sql = "SELECT * FROM users WHERE uid = ?";
         $check_stmt = $conn->prepare($check_sql);
         $check_stmt->bind_param("s", $_POST["username"]);
@@ -19,10 +15,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Hash the password
         $hashed_password = password_hash($_POST["password"], PASSWORD_DEFAULT);
 
-        // Insert user data into the database
         $insert_sql = "INSERT INTO users (uid, pwd, email) VALUES (?, ?, ?)";
         $insert_stmt = $conn->prepare($insert_sql);
         $insert_stmt->bind_param("sss", $_POST["username"], $hashed_password, $_POST["email"]);
@@ -44,11 +38,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://kit.fontawesome.com/887e44e44e.js" crossorigin="anonymous"></script>
     <form action="register.php" method="post">
         Username<br>
-        <input type="text" name="username" required><br>
+        <input type="text" name="username" class="input" required><br>
         Password<br>
-        <input type="password" name="password" required><br>
+        <input type="password" name="password" class="input" required><br>
         Email<br>
-        <input type="email" name="email" required><br>
+        <input type="email" name="email" class="input" required><br>
         <input type="submit" value="Sign Up" class="submitBtn">
     </form>
 
@@ -62,27 +56,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     :root {
         background: radial-gradient(circle, #0A0A33 36%, #000068 100%);
     }
-
+	
     body {
         font-family: Roboto, sans-serif;
-        color: white;
-        display: flexbox;
-        justify-content: center;
-        align-items: center;
-    }
-
-    form {
-        background-color: white;
-        box-shadow: 3px, 3px, gray;
+        color: black;
+        height: 100vh; 
+        margin: 0; 
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
     }
 
     .wrapper {
-        width: 30dvh;
-        height: 20dvh;
-        margin-top: 40dvh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        width: 80%; 
+        max-width: 400px;
+        padding: 20px;
+        background-color: white;
+        box-shadow: 0px 3px gray;
+        border-radius: 10px; 
+    }
+
+    .submitBtn {
+        width: 100%; 
+        margin-bottom: 10px; 
+        border-radius: 3px; 
+    }
+
+    .input {
+        width: 100%;
+        border-radius: 3px; 
+        background-color: white; 
+        margin-bottom: 10px; 
     }
 </style>
-
